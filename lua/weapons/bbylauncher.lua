@@ -50,9 +50,9 @@ function SWEP:PrimaryAttack()
 	ent:SetModel("models/props_c17/doll01.mdl")
  	util.SpriteTrail(ent, 0, Color(255,69,184), false, 15, 1, 4, 1/(15+1)*0.5, "trails/plasma.vmt")
 
-	ent:SetPos(self.Owner:EyePos() + (self.Owner:GetAimVector() * 16))
-	ent:SetAngles(self.Owner:EyeAngles())
-	ent.Attacker64 = self.Owner:SteamID64()
+	ent:SetPos(self:GetOwner():EyePos() + (self:GetOwner():GetAimVector() * 16))
+	ent:SetAngles(self:GetOwner():EyeAngles())
+	ent.Attacker64 = self:GetOwner():SteamID64()
 	ent.SWEP = self
 	ent.SWEPClass = "bbylauncher"
 	ent:Spawn()
@@ -63,12 +63,12 @@ function SWEP:PrimaryAttack()
 		return 
 	end
 	phys:SetMass(200)
-	local velocity = self.Owner:GetAimVector()
+	local velocity = self:GetOwner():GetAimVector()
 	velocity = velocity * 500000
 	phys:ApplyForceCenter(velocity)
 
-	if self.Owner:GetAmmoCount(self.Primary.Ammo) < 1 then
-		self.Owner:DropWeapon(self)
+	if self:GetOwner():GetAmmoCount(self.Primary.Ammo) < 1 then
+		self:GetOwner():DropWeapon(self)
 		self:Remove() 
 		return false
 	end
